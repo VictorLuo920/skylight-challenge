@@ -37,7 +37,7 @@ const UploaderContainer = () => {
     }
       
     if (uploading) {
-        return <UploadProgress />;
+        return <UploadProgress progress={progress}/>;
     } else {
         return <UploadForm handleUpload={handleUpload} onChangeHandler={onChangeHandler}/>;
     }

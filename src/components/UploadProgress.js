@@ -2,11 +2,12 @@ import React from 'react'
 import ProgressBar from './ProgressBar'
 
 const UploadProgress = (props) => {
-    return (<div>
+    return (
+    <div>
         <h1>Uploading...</h1>
-        <ProgressBar />
-        <ProgressBar />
-      </div>);
+        <ProgressBar progress={props.progress}/>
+    </div>
+    );
 }
 
 export default UploadProgress;
