@@ -1,26 +1,25 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import UploadForm from '../components/UploadForm';
 import UploadProgress from '../components/UploadProgress';
 
 const UPLOAD_BUCKET = 'https://skylight-react-interview-project.s3.amazonaws.com'
 
-class UploaderContainer extends Component {
+const UploaderContainer = () => {
 
-    state = {
-        uploading: false,
-        percentage: 0
-    }
+    const [uploading, setUploading] = useState(false);
+    const [progress, setProgress] = useState(0);
+    
 
-    onChangeHandler = (event) => {
+    const onChangeHandler = (event) => {
         let i = 0;
         while (i < event.target.files.length) {
-            this.handleUpload(event.target.files[i]);
+            handleUpload(event.target.files[i]);
             i++
         }
     };
 
-    handleUpload = (file) => {
-        this.setState({uploading: true})
+    const handleUpload = (file) => {
+        setUploading(true);
         let xhr = new XMLHttpRequest()
         let uploadUrl = `${ UPLOAD_BUCKET }/${ file.name }`
         xhr.open('PUT', uploadUrl) // I might be able to use async and await, or use a promise to "add" the step here 
@@ -28,22 +27,21 @@ class UploaderContainer extends Component {
         xhr.upload.onprogress = event => {
             const percentage = parseInt((event.loaded / event.total) * 100);
             console.log(percentage); 
-            this.setState({percentage: percentage});
+            setProgress(percentage);
             if (percentage === 100) {
-                this.setState({uploading: false, percentage: 0}); // could but set state onreadystatechange....
+                setUploading(false);
+                setProgress(0); // could but set state onreadystatechange....
             };// Update progress here. while percentage is still not at 100, 
            };
         xhr.send(file)
-      }
+    }
       
-    render() {
-        const { uploading } = this.state
-        if (uploading) {
-          return <UploadProgress />;
-        } else {
-          return <UploadForm handleUpload={this.handleUpload} onChangeHandler={this.onChangeHandler}/>;
-        }
+    if (uploading) {
+        return <UploadProgress />;
+    } else {
+        return <UploadForm handleUpload={handleUpload} onChangeHandler={onChangeHandler}/>;
     }
 }
+
 
 export default UploaderContainer;
