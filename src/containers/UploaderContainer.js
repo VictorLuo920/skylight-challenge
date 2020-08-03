@@ -19,15 +19,19 @@ class UploaderContainer extends Component {
     };
 
     handleUpload = (file) => {
+        this.setState({uploading: true})
         let xhr = new XMLHttpRequest()
         let uploadUrl = `${ UPLOAD_BUCKET }/${ file.name }`
         xhr.open('PUT', uploadUrl) // I might be able to use async and await, or use a promise to "add" the step here 
         xhr.overrideMimeType(file.type); //possibly use setState somewhere here to handle the progress data to being passed down as props? 
         xhr.upload.onprogress = event => {
             const percentage = parseInt((event.loaded / event.total) * 100);
-            console.log(percentage); // Update progress here
+            console.log(percentage); 
+            if (percentage === 100) {
+                this.setState({uploading: false});
+            };// Update progress here. while percentage is still not at 100, 
            };
-        xhr.send(file);
+        xhr.send(file)
       }
       
     render() {
