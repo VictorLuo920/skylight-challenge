@@ -7,7 +7,8 @@ const UPLOAD_BUCKET = 'https://skylight-react-interview-project.s3.amazonaws.com
 class UploaderContainer extends Component {
 
     state = {
-        uploading: false
+        uploading: false,
+        percentage: 0
     }
 
     onChangeHandler = (event) => {
@@ -27,8 +28,9 @@ class UploaderContainer extends Component {
         xhr.upload.onprogress = event => {
             const percentage = parseInt((event.loaded / event.total) * 100);
             console.log(percentage); 
+            this.setState({percentage: percentage});
             if (percentage === 100) {
-                this.setState({uploading: false});
+                this.setState({uploading: false, percentage: 0}); // could but set state onreadystatechange....
             };// Update progress here. while percentage is still not at 100, 
            };
         xhr.send(file)
