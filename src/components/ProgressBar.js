@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class ProgressBar extends Component {
-    render() {
+const ProgressBar = (props) => {
+    
         return <div>
             <p>cats.gif</p>
             <div style={{
@@ -14,6 +14,7 @@ class ProgressBar extends Component {
                 height: '50px' }}></div>
       </div>
     </div>
-    }
+    
 }
+
 export default ProgressBar
