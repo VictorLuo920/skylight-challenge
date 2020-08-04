@@ -6,13 +6,21 @@ const UPLOAD_BUCKET = 'https://skylight-react-interview-project.s3.amazonaws.com
 
 const UploaderContainer = () => {
 
+    const [selectedFiles, setSelectedFiles] = useState(undefined);
+    const [currentFile, setCurrentFile] = useState(undefined);
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [fileInfos, setFileInfos] = useState([]);
     
+    const selectFile = (event) => {
+        setSelectedFiles(event.target.files);
+    };
 
     const onChangeHandler = (event) => {
+        setSelectedFiles(event.target.files)
         let i = 0;
         while (i < event.target.files.length) {
+            //this needs to be written as a nested function that properly stores event.target.files into an state array of "currently uploading files"
             handleUpload(event.target.files[i]);
             i++
         }
@@ -27,7 +35,7 @@ const UploaderContainer = () => {
         xhr.upload.onprogress = event => {
             const percentage = parseInt((event.loaded / event.total) * 100);
             console.log(percentage); 
-            setProgress(percentage);
+            setProgress(percentage);// can I parse out the files from the event here? I can can't I? 
             if (percentage === 100) {
                 setUploading(false);
                 setProgress(0); // could but set state onreadystatechange....
