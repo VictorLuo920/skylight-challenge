@@ -2,7 +2,7 @@ import React from 'react'
 import ProgressBar from './ProgressBar'
 
 const UploadProgress = (props) => {
-    // {files.map(file => (<ProgressBar progress={file.progress}>))}git 
+    // return {props.files.map(file => (<ProgressBar progress={file.progress}>))}
     return (
     <div>
         <h1>Uploading...</h1>
